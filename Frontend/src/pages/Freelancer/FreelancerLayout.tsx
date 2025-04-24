@@ -75,7 +75,7 @@ const FreelancerLayout: React.FC<Props> = ({
                 onClick={() => setDropdownOpen(!isDropdownOpen)}
               >
                 <User size={20} />
-                <span>freelancer@email.com</span>
+                <span>freelancer</span>
                 <ChevronDown size={16} />
               </button>
 

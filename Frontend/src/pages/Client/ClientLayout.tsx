@@ -75,7 +75,7 @@ const ClientLayout: React.FC<Props> = ({
                 onClick={() => setDropdownOpen(!isDropdownOpen)}
               >
                 <User size={20} />
-                <span>client@email.com</span>
+                <span>client</span>
                 <ChevronDown size={16} />
               </button>
 
