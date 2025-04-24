@@ -1,0 +1,9 @@
+# Ignore logs and environment files
+*.log
+.env
+
+# Ignore folders
+/build/
+node_modules/
+
+# Note: no need to prefix with /Frontend if this .gitignore is inside the Frontend folder
