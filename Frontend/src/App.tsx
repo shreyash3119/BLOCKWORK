@@ -38,7 +38,7 @@
   import Tasklists from "./pages/Freelancer/Tasklists";
   import Urgent from "./pages/Freelancer/Urgent";
   import Profile from "./pages/Profile";
-
+  import PostJob from "./pages/Client/PostJob";
   import HomePage from "./pages/HomePage";
   import TestBackend from './pages/TestBackend';
 
@@ -123,6 +123,8 @@ const App: React.FC = () => {
         <Route path="/client/tasklists" element={userRole === "client" ? <DashboardLayout userRole="client" darkMode={darkMode} setDarkMode={setDarkMode} onLogout={handleLogout}><Client_tasklist /></DashboardLayout> : <Navigate to="/" />} />
         <Route path="/client/files" element={userRole === "client" ? <DashboardLayout userRole="client" darkMode={darkMode} setDarkMode={setDarkMode} onLogout={handleLogout}><Files /></DashboardLayout> : <Navigate to="/" />} />
         <Route path="/client/profile" element={userRole === "client" ? <DashboardLayout userRole="client" darkMode={darkMode} setDarkMode={setDarkMode} onLogout={handleLogout}><Profile /></DashboardLayout> : <Navigate to="/" />} />
+        <Route path="/client/post-job" element={<PostJob />} />
+
 
         {/* Freelancer Routes */}
         <Route path="/freelancer-dashboard" element={userRole === "freelancer" ? <DashboardLayout userRole="freelancer" darkMode={darkMode} setDarkMode={setDarkMode} onLogout={handleLogout}><FreelancerDashboard /></DashboardLayout> : <Navigate to="/" />} />

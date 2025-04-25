@@ -7,6 +7,8 @@ require('dotenv').config();
 const Freelancer = require('./models/Freelancer');
 const Client = require('./models/Client');
 
+const jobRoutes = require('./routes/jobRoutes'); // Add this line to import job routes
+// const jobRoutes = require('./routes/jobRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -95,6 +97,10 @@ app.post('/api/login', async (req, res) => {
     res.status(500).json({ message: 'Login failed', error });
   }
 });
+
+// Use the jobRoutes for the /api/jobs endpoint
+app.use('/api/jobs', jobRoutes);
+// app.use('/api/jobs', jobRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
