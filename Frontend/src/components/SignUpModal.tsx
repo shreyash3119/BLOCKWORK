@@ -68,11 +68,13 @@ export default function SignUpModal({ isOpen, onClose, onSignUp }: SignUpModalPr
       const data = await res.json();
       if (res.ok) {
         localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("userId", data.user._id); // ✅ Bonus: Store user ID
         localStorage.setItem("role", role); // ✅ Store role
         onSignUp(role);
         onClose();
         navigate(role === "client" ? "/client-dashboard" : "/freelancer-dashboard");
-      } else {
+      }
+       else {
         alert(data.error || data.message || "Signup failed");
         console.error("Signup error:", data);
       }

@@ -33,17 +33,18 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
         },
         body: JSON.stringify({ email, password, role }),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok) {
-        // Save user data and role
+        // ✅ Store user and userId
         localStorage.setItem("user", JSON.stringify(result.user));
+        localStorage.setItem("userId", result.user._id); // BONUS: Store user ID
         localStorage.setItem("role", role);
-
-        onLogin(role); // Notify parent component
+  
+        onLogin(role); // Notify parent
         onClose();     // Close modal
-        setError(null); // Clear errors
+        setError(null);
       } else {
         setError(result.message || "Login failed");
       }
@@ -52,6 +53,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
       setError("Server error. Please try again.");
     }
   };
+  
 
   return (
     <div

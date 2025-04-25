@@ -14,12 +14,17 @@ const CurrentProjects = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (!user || !user._id) return;
+    const freelancerId = localStorage.getItem('userId');
 
     const fetchProjects = async () => {
       try {
-        const res = await axios.get(`/api/jobs/my-projects/${user._id}`);
-        setProjects(res.data);
+        if (user?._id) {
+          const res1 = await axios.get(`/api/jobs/my-projects/${user._id}`);
+          setProjects(res1.data);
+        } else if (freelancerId) {
+          const res2 = await axios.get(`http://localhost:5000/api/jobs/freelancer-projects/${freelancerId}`);
+          setProjects(res2.data);
+        }
       } catch (err) {
         console.error('Failed to fetch current projects:', err);
       }
