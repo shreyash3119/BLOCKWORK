@@ -19,7 +19,7 @@ const PostJob = () => {
     const clientId = localStorage.getItem('userId'); // ✅ get clientId
 
     try {
-      await axios.post('http://localhost:5000/api/jobs/post', {
+      await axios.post('http://localhost:5001/api/jobs/post', {
         ...formData,
         tags,
         clientId, // ✅ send clientId to backend

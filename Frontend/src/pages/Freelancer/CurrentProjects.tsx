@@ -22,9 +22,9 @@ const CurrentProjects = () => {
 
         let url = '';
         if (role === 'freelancer') {
-          url = `http://localhost:5000/api/jobs/freelancer-projects/${userId}`;
+          url = `http://localhost:5001/api/jobs/freelancer-projects/${userId}`;
         } else if (role === 'client') {
-          url = `http://localhost:5000/api/jobs/client-projects/${userId}`;
+          url = `http://localhost:5001/api/jobs/client-projects/${userId}`;
         }
 
         if (url) {

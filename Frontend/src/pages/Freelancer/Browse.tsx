@@ -17,7 +17,7 @@ const Browse = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/jobs/available');
+      const res = await axios.get('http://localhost:5001/api/jobs/available');
       const unacceptedJobs = res.data.filter((job: Job) => !job.acceptedBy);
       setAvailableJobs(unacceptedJobs);
     } catch (err) {

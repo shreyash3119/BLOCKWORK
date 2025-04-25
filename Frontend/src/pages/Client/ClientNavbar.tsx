@@ -16,6 +16,8 @@ import {
   Mic,
   ListTodo,
   AlarmClock,
+  Image,
+  FileSearch,
   CalendarClock,
 } from "lucide-react";
 import React, { useState } from "react";
@@ -27,13 +29,16 @@ type Props = {
   onLogout: () => void;
 };
 
-{/* <Link to="/client/files">Project Files</Link> */}
+{
+  /* <Link to="/client/files">Project Files</Link> */
+}
 
 const ClientNavbar: React.FC<Props> = ({ onLogout }) => {
   const { pathname } = useLocation();
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [urgentOpen, setUrgentOpen] = useState(false);
   const [newLancersOpen, setNewLancersOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
 
   const navItemClasses = (activePath: string) =>
     `flex items-center gap-2 px-4 py-3 hover:bg-gray-700 ${
@@ -81,12 +86,12 @@ const ClientNavbar: React.FC<Props> = ({ onLogout }) => {
 
         {/* Tasklist */}
         <Link
-           to="/Client/tasklists"
-           className="p-4 hover:bg-blue-700 cursor-pointer flex items-center gap-2"
-         >
-           <ListTodo size={18} />
-           <span>Tasklist</span>
-         </Link>
+          to="/Client/tasklists"
+          className="p-4 hover:bg-blue-700 cursor-pointer flex items-center gap-2"
+        >
+          <ListTodo size={18} />
+          <span>Tasklist</span>
+        </Link>
 
         {/* Smart Sourcing */}
         <Link
@@ -184,6 +189,39 @@ const ClientNavbar: React.FC<Props> = ({ onLogout }) => {
               >
                 <Network size={16} />
                 <span>Browse</span>
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* AI Arbitor Dropdown */}
+        <div className="border-t border-b border-gray-700">
+          <button
+            onClick={() => setAiOpen(!aiOpen)}
+            className="flex items-center justify-between w-full px-4 py-3 hover:bg-gray-700"
+          >
+            <div className="flex items-center gap-2">
+              <FolderKanban size={18} />
+              <span>AI Arbitor</span>
+            </div>
+            {aiOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          </button>
+
+          {aiOpen && (
+            <div className="pl-6 pr-2 pb-2 flex flex-col gap-2 text-sm">
+              <Link
+                to="/client/image-comparator"
+                className="flex items-center gap-2 hover:bg-gray-700 p-2 rounded cursor-pointer"
+              >
+                <Image size={16} />
+                <span>Image Comparator</span>
+              </Link>
+              <Link
+                to="/client/requirement-analyzer"
+                className="flex items-center gap-2 hover:bg-gray-700 p-2 rounded cursor-pointer"
+              >
+                <FileSearch size={16} />
+                <span>Requirement Analyzer</span>
               </Link>
             </div>
           )}

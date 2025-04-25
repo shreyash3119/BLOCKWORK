@@ -26,7 +26,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
   // Handle login for either client or freelancer
   const handleLogin = async (role: "client" | "freelancer") => {
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:5001/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
