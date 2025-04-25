@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// 👇 Define the Job type
 type Job = {
   _id: string;
   title: string;
@@ -14,16 +13,23 @@ const CurrentProjects = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const freelancerId = localStorage.getItem('userId');
+    const role = localStorage.getItem('role');
+    const userId = user._id || localStorage.getItem('userId');
 
     const fetchProjects = async () => {
       try {
-        if (user?._id) {
-          const res1 = await axios.get(`/api/jobs/my-projects/${user._id}`);
-          setProjects(res1.data);
-        } else if (freelancerId) {
-          const res2 = await axios.get(`http://localhost:5000/api/jobs/freelancer-projects/${freelancerId}`);
-          setProjects(res2.data);
+        if (!userId) return;
+
+        let url = '';
+        if (role === 'freelancer') {
+          url = `http://localhost:5000/api/jobs/freelancer-projects/${userId}`;
+        } else if (role === 'client') {
+          url = `http://localhost:5000/api/jobs/client-projects/${userId}`;
+        }
+
+        if (url) {
+          const response = await axios.get(url);
+          setProjects(response.data);
         }
       } catch (err) {
         console.error('Failed to fetch current projects:', err);

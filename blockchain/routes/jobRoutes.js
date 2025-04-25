@@ -36,7 +36,6 @@ router.get('/available', async (req, res) => {
 router.post('/accept/:jobId', async (req, res) => {
   const { freelancerId } = req.body;
   const { jobId } = req.params;
-  console.log('Accepting job with ID:', jobId);  // Add this line to log the jobId
 
   try {
     const job = await Job.findByIdAndUpdate(
@@ -58,7 +57,6 @@ router.post('/accept/:jobId', async (req, res) => {
   }
 });
 
-
 // ✅ GET current projects for freelancer
 router.get('/freelancer-projects/:freelancerId', async (req, res) => {
   try {
@@ -69,17 +67,18 @@ router.get('/freelancer-projects/:freelancerId', async (req, res) => {
   }
 });
 
-// ✅ GET current projects for client (only accepted jobs)
+// ✅ FIXED: GET current projects for client (only accepted jobs)
 router.get('/client-projects/:clientId', async (req, res) => {
   try {
     const jobs = await Job.find({
       clientId: req.params.clientId,
       acceptedBy: { $ne: null },
-    }).populate('acceptedBy', 'name email');
+    }).populate('acceptedBy', 'name email'); // ✅ Populates accepted freelancer
 
     res.status(200).json(jobs);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching client projects', err });
+    console.error("Error fetching client projects:", err);
+    res.status(500).json({ message: 'Error fetching client projects', error: err.message });
   }
 });
 
