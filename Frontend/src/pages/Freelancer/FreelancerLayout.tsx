@@ -21,6 +21,10 @@ const FreelancerLayout: React.FC<Props> = ({
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Get user info from localStorage
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -75,7 +79,7 @@ const FreelancerLayout: React.FC<Props> = ({
                 onClick={() => setDropdownOpen(!isDropdownOpen)}
               >
                 <User size={20} />
-                <span>freelancer</span>
+                <span>{user?.name || "freelancer"}</span>
                 <ChevronDown size={16} />
               </button>
 

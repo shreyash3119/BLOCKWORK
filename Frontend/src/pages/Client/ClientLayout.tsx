@@ -21,6 +21,10 @@ const ClientLayout: React.FC<Props> = ({
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Parse user safely
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -75,7 +79,7 @@ const ClientLayout: React.FC<Props> = ({
                 onClick={() => setDropdownOpen(!isDropdownOpen)}
               >
                 <User size={20} />
-                <span>client</span>
+                <span>{user?.name || "client"}</span>
                 <ChevronDown size={16} />
               </button>
 

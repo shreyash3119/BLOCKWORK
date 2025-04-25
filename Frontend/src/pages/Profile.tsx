@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-interface User {
-  firstName: string;
-  lastName: string;
+type User = {
+  name: string;
   email: string;
-  role: "client" | "freelancer";
-  country: string;
-  skills?: string[];
-  bio?: string;
-}
+};
 
-const Profile: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
-  if (!user) return <div>Loading profile...</div>;
+const Profile = () => {
+  const storedUser = localStorage.getItem("user");
+  const user: User | null = storedUser ? JSON.parse(storedUser) : null;
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-xl rounded-xl">
-      <h1 className="text-2xl font-bold mb-4">👤 Profile</h1>
-      <p><strong>First Name:</strong> {user.firstName}</p>
-      <p><strong>Last Name:</strong> {user.lastName}</p>
-      <p><strong>Email:</strong> {user.email}</p>
-      <p><strong>Role:</strong> {user.role}</p>
-      <p><strong>Country:</strong> {user.country}</p>
-
-      {user.role === "freelancer" && (
+    <div className="p-6 max-w-xl mx-auto bg-white shadow-md rounded-lg mt-10">
+      <h2 className="text-2xl font-bold mb-4">My Profile</h2>
+      {user ? (
         <>
-          <p><strong>Skills:</strong> {user.skills?.join(", ")}</p>
-          <p><strong>Bio:</strong> {user.bio}</p>
+          <p className="text-lg">
+            <strong>Name:</strong> {user.name}
+          </p>
+          <p className="text-lg">
+            <strong>Email:</strong> {user.email}
+          </p>
         </>
+      ) : (
+        <p>No user data found.</p>
       )}
     </div>
   );
