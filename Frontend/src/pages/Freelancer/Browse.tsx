@@ -31,7 +31,7 @@ const Browse = () => {
 
   const handleAccept = async (jobId: string) => {
     try {
-      await axios.post(`http://localhost:5000/api/jobs/accept/${jobId}`, {
+      await axios.post(`http://localhost:5001/api/jobs/accept/${jobId}`, {
         freelancerId,
       });
       setNotification('✅ Job accepted successfully!');
