@@ -1,58 +1,42 @@
-// Import the necessary dependencies
-const { ethers, upgrades } = require("hardhat");
+// SPDX-License-Identifier: MIT
+const { ethers } = require("hardhat");
+const fs = require("fs");
 
 async function main() {
-  // Assign a valid Ethereum address or ENS name to freelancerWalletAddress
-  // Replace with an actual Ethereum address or ENS name (e.g., "freelancer.eth")
-  let freelancerWalletAddress = "0x1234567890abcdef1234567890abcdef12345678"; // Example Ethereum address
-  // OR
-  // let freelancerWalletAddress = "freelancer.eth"; // Example ENS name
+  // 🔹 Replace this with your actual freelancer wallet address or ENS
+  let freelancerWalletAddress = "0x650E53A25e4D947334a84BA8ba78B2ce97f03504";
 
-  // Check if the provided address is an ENS name or Ethereum address.
+  // 🔸 Resolve ENS name if necessary
   if (freelancerWalletAddress.endsWith(".eth")) {
-    // If it's an ENS name, resolve it to an Ethereum address
     console.log(`Resolving ENS name: ${freelancerWalletAddress}`);
     freelancerWalletAddress = await ethers.provider.resolveName(freelancerWalletAddress);
-    
+
     if (!freelancerWalletAddress) {
-      console.error(`Failed to resolve ENS name: ${freelancerWalletAddress}`);
-      return;
+      throw new Error("❌ Failed to resolve ENS name.");
     }
-  } else {
-    // Ensure it's a valid Ethereum address
-    if (!ethers.utils.isAddress(freelancerWalletAddress)) {
-      console.error(`Invalid Ethereum address: ${freelancerWalletAddress}`);
-      return;
-    }
+  } else if (!ethers.utils.isAddress(freelancerWalletAddress)) {
+    throw new Error("❌ Invalid Ethereum address.");
   }
 
-  console.log(`Freelancer Wallet Address: ${freelancerWalletAddress}`);
+  console.log(`✅ Freelancer address resolved: ${freelancerWalletAddress}`);
 
-  // Get the contract factory for your contract
-  const Contract = await ethers.getContractFactory("FreelanceEscrow"); // Replace with your contract name
+  // 🔹 Deploy contract
+  const ContractFactory = await ethers.getContractFactory("FreelanceEscrow");
+  const contract = await ContractFactory.deploy(freelancerWalletAddress);
 
-  // Deploy the contract (example deployment)
-  const contract = await Contract.deploy(freelancerWalletAddress); // Pass the wallet address as a constructor parameter
-
-  // Wait for the transaction to be mined
+  console.log("📦 Deploying contract...");
   await contract.deployed();
 
-  console.log(`Contract deployed to: ${contract.address}`);
+  console.log(`✅ Contract deployed at: ${contract.address}`);
 
-  // Optionally, verify the contract (if using an upgradeable contract)
-  // If using OpenZeppelin upgrades
-  // const contract = await upgrades.deployProxy(Contract, [constructorArgs], { initializer: 'initialize' });
-
-  // You can also interact with the deployed contract here if needed
-  // Example: Call a function on the contract after deployment
-  // const result = await contract.someFunction();
-  // console.log('Function result:', result);
+  // 🔸 Save contract address to file for frontend
+  fs.writeFileSync("deployedAddress.txt", contract.address);
+  console.log("📝 Contract address written to deployedAddress.txt");
 }
 
-// Run the deployment script
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
+  .catch((err) => {
+    console.error("❌ Deployment failed:", err);
     process.exit(1);
   });

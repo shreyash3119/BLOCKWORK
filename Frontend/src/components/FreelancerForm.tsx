@@ -25,7 +25,7 @@ const FreelancerForm: React.FC<FreelancerFormProps> = ({ onClose }) => {
     console.log("Form submitted", formData);
 
     try {
-      const response = await fetch("http://localhost:5000/api/freelancers", {
+      const response = await fetch("http://localhost:5001/api/freelancers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

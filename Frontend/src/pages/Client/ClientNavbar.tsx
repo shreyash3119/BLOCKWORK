@@ -16,6 +16,7 @@ import {
   Mic,
   ListTodo,
   AlarmClock,
+  FileText,
   Image,
   FileSearch,
   CalendarClock,
@@ -234,6 +235,13 @@ const ClientNavbar: React.FC<Props> = ({ onLogout }) => {
         >
           <BarChart3 size={18} />
           <span>Analytics</span>
+        </Link>
+        <Link
+          to="/contract"
+          className={navItemClasses("/client/contract")}
+        >
+          <FileText size={18} />
+          <span>Contract</span>
         </Link>
       </nav>
 

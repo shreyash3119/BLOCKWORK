@@ -28,6 +28,7 @@ import Client_tasklist from "./pages/Client/Clienttasklist";
 import Files from "./pages/Client/Files";
 import ImageComparator from "./features/tools/ImageComparator";
 import RequirementAnalyzer from "./features/tools/RequirementAnalyzer";
+import ContractPage from "./components/ContractPage"
 
 import FreelancerLayout from "./pages/Freelancer/FreelancerLayout";
 import FreelancerDashboard from "./pages/FreelancerDashboard";
@@ -128,6 +129,8 @@ return (
       <Route path="/client/post-job" element={<PostJob />} />
       <Route path="/client/requirement-analyzer" element={<RequirementAnalyzer />} />
       <Route path="/client/image-comparator" element={<ImageComparator />} />
+      <Route path="/contract" element={<ContractPage />} />
+
 
 
       {/* Freelancer Routes */}
