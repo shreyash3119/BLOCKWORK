@@ -6,6 +6,7 @@ const Client = require("../models/Client");
 
 router.get("/:id", async (req, res) => {
   try {
+    // Fetch the user by ID
     const user = await User.findById(req.params.id).lean();
     if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -14,6 +15,7 @@ router.get("/:id", async (req, res) => {
       return res.status(400).json({ message: "Invalid user role" });
     }
 
+    // Fetch profile data based on the user's role
     let profile = {};
     if (user.role === "freelancer") {
       profile = await Freelancer.findOne({ email: user.email }).lean();
@@ -23,6 +25,7 @@ router.get("/:id", async (req, res) => {
       if (!profile) return res.status(404).json({ message: "Client profile not found" });
     }
 
+    // Send back the user data along with the profile
     res.json({ ...user, profile });
   } catch (err) {
     console.error("Error fetching user:", err);
